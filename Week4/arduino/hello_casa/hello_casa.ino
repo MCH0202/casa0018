@@ -42,12 +42,12 @@ TfLiteTensor* output = nullptr;
 
 
 // Create an area of memory to use for input, output, and intermediate arrays. 
-const int kTensorArenaSize = (2 * 1024);
+const int kTensorArenaSize = (8 * 1024);
 uint8_t tensor_arena[kTensorArenaSize];
 
 // This constant represents the range of x values our model was trained on,
 // which is from 0 to (2 * Pi). We approximate Pi to avoid requiring additional libraries.
-const float kXrange = 2.f * 3.14159265359f;
+const float kXrange = 4.f * 3.14159265359f;
 
 // This constant determines number of inferences to perform across range of x values defined above. 
 const int kInferencesPerCycle = 8000;
@@ -75,7 +75,7 @@ void setup() {
 
 
   // Load in the model we have defined in the model.cpp file and map it into a usable data structure. 
-  model = tflite::GetModel(g_model);
+  model = tflite::GetModel(models_model_tflite);
 
 
   // Check to see if the model is valid using the version function in the library and 
