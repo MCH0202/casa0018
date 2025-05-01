@@ -1,4 +1,4 @@
-# DL Project: garbage classification on the Edge with Raspberry Pi
+# DL Project: Garbage Classification on the Edge with Raspberry Pi
 
 **Author:** Muchen Han  
 **Edge Impulse project:** [View](https://studio.edgeimpulse.com/studio/683042)  
@@ -37,7 +37,7 @@ Several iterations were run to refine data, architecture, and deployment strateg
 | Glass Bottle F1     | ~92%      |
 | Can Misclass Rate   | ~32% into Glass |
 
-> Example visual outputs and confusion matrix available in the edge impulse link.
+> Example visual outputs and confusion matrix available in the Edge Impulse project link.
 
 ---
 
@@ -55,7 +55,53 @@ Several iterations were run to refine data, architecture, and deployment strateg
 
 ---
 
+### 🛠 Deployment Instructions
+
+To run this project on a Raspberry Pi with Camera Module v3 and GPIO-connected LEDs:
+
+#### 1. Install Edge Impulse dependencies
+
+Run the following commands on your Raspberry Pi to install necessary packages:
+
+```bash
+sudo apt update
+curl -sL https://deb.nodesource.com/setup_20.x | sudo bash -
+sudo apt install -y gcc g++ make build-essential nodejs sox \
+gstreamer1.0-tools gstreamer1.0-plugins-good \
+gstreamer1.0-plugins-base gstreamer1.0-plugins-base-apps
+
+sudo npm install edge-impulse-linux -g --unsafe-perm
+```
+
+#### 2. Set up the project
+
+- Clone this repository to your Raspberry Pi.
+- Connect your LEDs to GPIO 17 (can, yellow), GPIO 22 (glass bottle, green), and GPIO 27 (cardboard, blue).
+- Copy the `.eim` model file (`garbage-classification-linux-aarch64-v1.eim`) and `led_control.py` into the same folder.
+
+#### 3. Install Python dependencies (if needed)
+
+```bash
+pip3 install RPi.GPIO
+```
+
+#### 4. Run the system
+
+```bash
+python3 led_control.py
+```
+
+The script will:
+
+- Start the Edge Impulse runner
+- Monitor the output logs
+- Parse classification results
+- Light up the corresponding LED when confidence exceeds 0.7 for 5 consecutive readings
+
+Press `Ctrl+C` to exit. The script will safely turn off LEDs and clean up GPIO on exit.
+
+---
+
 ### 📌 Note
 
-This project was completed for CASA0018 (UCL). Full training logs, images are in edge impulse link. The deployment code are available in this repository. 
-
+This project was completed for CASA0018 (UCL). The Edge Impulse project includes data logs and confusion matrix. The deployment script and model are included in this repository.
